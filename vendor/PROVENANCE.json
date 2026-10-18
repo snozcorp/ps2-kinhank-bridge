@@ -1,0 +1,27 @@
+{
+  "opl": {
+    "repository": "https://github.com/RoloDeOvo/Open-PS2-Loader",
+    "commit": "f16f35435f6c4b55a4282a1ba35b32ec40e18739",
+    "tag": "modular-pademu",
+    "paths": [
+      "modules/pademu"
+    ],
+    "license": "AFL-3.0; SDK-origin files retain AFL-2.0 notices"
+  },
+  "ps2rd": {
+    "repository": "https://github.com/mlafeldt/ps2rd",
+    "commit": "b433fa34bed0edb2665d5d6bd4f45585606aed74",
+    "paths": [
+      "ee/debugger/syscall_hooks.S",
+      "ee/debugger/debugger.c"
+    ],
+    "license": "GPL-3.0-or-later"
+  },
+  "ps2sdk": {
+    "repository": "https://github.com/ps2dev/ps2sdk",
+    "toolchain_distribution": "https://github.com/ps2dev/ps2dev/releases/tag/v2.0.0",
+    "tested_usbd_sha256": "79d7e20f18801233fc0b8ccde42e784c263c0506c60343f5ea7ca83b02e05c05",
+    "license": "AFL-2.0",
+    "note": "The exact SDK source commit in the prebuilt toolchain is not recorded; do not infer a source commit from the release date."
+  }
+}
