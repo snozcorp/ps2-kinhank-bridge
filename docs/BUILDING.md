@@ -20,7 +20,7 @@ python tools/verify.py
 
 Paths can also be passed with `--ps2dev` and `--ps2sdk`. Windows builds may need the 32-bit runtime DLLs used by the official Windows toolchain on PATH. Keep those dependencies outside this repository.
 
-Output: `build/DQ8-KINHANK-V11.ELF`. The original physically tested file under `releases/v11/` is never overwritten.
+Output: `build/DQ8-KINHANK-V11.ELF`. The public release under `releases/v11/` is never overwritten. It has non-runtime debug metadata removed; all runtime load segments match the hardware-tested original.
 
 ## Toolchain provenance
 
@@ -49,3 +49,7 @@ The release source rebuild was verified byte-for-byte against:
 5. Embed the resident ELF into a normal frontend ELF linked at `0x100000`.
 
 The output retains the V11 diagnostics and game check. Build cleanup or broader compatibility work should be done separately from this baseline.
+
+## Public binary metadata
+
+The public release is created with `mips64r5900el-ps2-elf-strip --strip-debug`, removing a local build path from `.debug_str`. Verification compares every PT_LOAD segment and entry point with the original. This changes the file checksum, not runtime code/data. The metadata-only public derivative has not been separately run on the console.

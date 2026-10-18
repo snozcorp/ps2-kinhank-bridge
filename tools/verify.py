@@ -5,7 +5,8 @@ from pathlib import Path
 import struct
 
 ROOT = Path(__file__).resolve().parents[1]
-EXPECTED = '0af4a5b34230c73bf2f733a1634bf8659cacab1e0a8914e0a5c03d761c6f5079'
+EXPECTED = 'ee9160badbcb9c479af62208ab097c71f9a20598e97c6be4ecbdc2813a89391a'
+ORIGINAL = '0af4a5b34230c73bf2f733a1634bf8659cacab1e0a8914e0a5c03d761c6f5079'
 
 def elf(path):
     data = path.read_bytes()
@@ -55,7 +56,7 @@ def main():
     release = ROOT/'releases/v11/DQ8-KINHANK-V11.ELF'
     assert hashlib.sha256(release.read_bytes()).hexdigest() == EXPECTED
     assert (ROOT/'releases/v11/SHA256SUMS').read_text().split()[0] == EXPECTED
-    print('PASS original physically tested release SHA256')
+    print('PASS public release SHA256 (debug metadata removed)')
     check_launcher(release)
     rebuilt = ROOT/'build/DQ8-KINHANK-V11.ELF'
     if not rebuilt.exists():
@@ -76,8 +77,13 @@ def main():
                 assert sections[section[7]][2]&2, f'{name}: relocation targets a non-runtime section'
         assert rc(name.replace('xbox360usb','xbox')+'_data') == data
         print('PASS',name,': embedded module and runtime relocation targets')
-    identical = rebuilt.read_bytes() == release.read_bytes()
-    print('Rebuild is byte-identical to tested V11.' if identical else 'Rebuild differs from tested V11; hardware compatibility is not established by these checks.')
+    identical = hashlib.sha256(rebuilt.read_bytes()).hexdigest() == ORIGINAL
+    public,pl,_,_,_ = elf(release)
+    built,bl,_,_,_ = elf(rebuilt)
+    load_data = lambda d,ps: [(p[2],p[5],p[6],d[p[1]:p[1]+p[4]]) for p in ps if p[0]==1]
+    assert load_data(public,pl) == load_data(built,bl), 'Runtime differs from public release'
+    print('Rebuild is byte-identical to hardware-tested original.' if identical else 'Rebuild differs from hardware-tested original; compatibility is not established.')
+    print('PASS public release runtime bytes equal the source rebuild')
     print('These checks do not emulate the EE kernel, IOP, USB receiver or disc boot.')
 
 if __name__ == '__main__':

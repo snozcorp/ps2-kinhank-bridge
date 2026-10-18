@@ -45,7 +45,7 @@ The bridge and hooks live in RAM. After power-off, launch V11 again or use the d
 
 [Build instructions](docs/BUILDING.md) · [How it works](docs/ARCHITECTURE.md) · [Testing and known limits](docs/TESTING.md)
 
-The checked-in source was rebuilt with the original local toolchain and produced **the identical SHA-256** as the physically tested V11 ELF. Different toolchain versions may produce different output. The tested binary is kept separately from generated build output.
+The checked-in source was rebuilt with the original local toolchain and produced **the identical SHA-256** as the physically tested V11 ELF. Different toolchain versions may produce different output. The public download has debug metadata removed to exclude a local build path; its loadable segments and entry point are identical to that original. This metadata-only derivative has not been separately run on the console. Generated build output stays separate from the release.
 
 ## Credits and licenses
 

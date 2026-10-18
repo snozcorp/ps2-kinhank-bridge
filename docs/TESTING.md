@@ -8,7 +8,7 @@ This is one known setup. It is not a compatibility survey, extended endurance te
 
 ## Repeatable local checks
 
-`python tools/verify.py` checks release integrity, source/build packaging, ELF segment/entry bounds, embedded resident bytes and IRX relocation targets. After building, it compares the output to the tested release and reports whether it is identical.
+`python tools/verify.py` checks public release integrity, source/build packaging, ELF segment/entry bounds, embedded resident bytes and IRX relocation targets. After building, it compares the output hash to the hardware-tested original and compares all runtime load segments with the debug-stripped public release. The public metadata-only derivative has not been separately run on the console.
 
 Optional instruction-level tests:
 

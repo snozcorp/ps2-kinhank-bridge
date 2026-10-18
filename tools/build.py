@@ -125,7 +125,7 @@ def main():
     run([gcc,'-T'+str(sdk/'ee/startup/linkfile'),'-O2','-o',output,*objects,'-L'+str(sdk/'ee/lib'),
          '-Wl,-zmax-page-size=128','-Wl,-e,checked_entry','-Wl,-Map='+str(BUILD/'frontend.map'),'-ldebug','-lcdvd'])
     print(f'Built {output}\nSHA256 {hashlib.sha256(output.read_bytes()).hexdigest()}')
-    print('Source rebuild; the physically tested original remains in releases/v11/.')
+    print('Source rebuild; the public metadata-stripped release remains in releases/v11/.')
 
 if __name__ == '__main__':
     main()
